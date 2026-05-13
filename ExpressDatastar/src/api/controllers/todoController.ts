@@ -11,15 +11,6 @@ type TodoItemBody = {
   name?: string;
 };
 
-const parseTodoItemId = (id?: string) => {
-  const parsedId = Number(id);
-
-  const result = Number.isFinite(parsedId) ? parsedId : null;
-
-  console.log(parsedId, result);
-  return result;
-};
-
 export const createTodoItemAsync = (
   req: Request<{}, {}, TodoItemBody>,
   res: Response,
@@ -33,7 +24,7 @@ export const createTodoItemAsync = (
       return;
     }
 
-    const newTodoItem: TodoItem = { id: Date.now(), name: name.trim() };
+    const newTodoItem: TodoItem = { id: Date.now().toString(), name: name.trim() };
 
     items.push(newTodoItem);
     res.status(201).json(newTodoItem);
@@ -56,8 +47,7 @@ export const getTodoItemAsync = (
   next: NextFunction
 ) => {
   try {
-    const { id } = req.params;
-    const itemId = parseTodoItemId(id);
+    const itemId = req.params.id;
 
     if (itemId === null) {
       res.status(400).json({ message: 'Invalid TodoItem id' });
@@ -83,9 +73,8 @@ export const updateTodoItemAsync = (
   next: NextFunction
 ) => {
   try {
-    const { id } = req.params;
+    const itemId = req.params.id;
     const { name } = req.body;
-    const itemId = parseTodoItemId(id);
 
     if (itemId === null) {
       res.status(400).json({ message: 'Invalid todoItem id' });
@@ -117,8 +106,7 @@ export const deleteTodoItemAsync = (
   next: NextFunction
 ) => {
   try {
-    const { id } = req.params;
-    const itemId = parseTodoItemId(id);
+    const itemId = req.params.id;
 
     if (itemId === null) {
       res.status(400).json({ message: 'Invalid todoItem id' });

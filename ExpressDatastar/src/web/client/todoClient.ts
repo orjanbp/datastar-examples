@@ -49,7 +49,7 @@ export const createTodoItem = async (
   });
 };
 
-export const deleteTodoItem = async (baseUrl: string, id: number): Promise<void> => {
+export const deleteTodoItem = async (baseUrl: string, id: string): Promise<void> => {
   await fetch(`${getTodoApiUrl(baseUrl)}/${id}`, {
     method: 'DELETE',
   });

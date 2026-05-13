@@ -2,43 +2,20 @@ import { NextFunction, Request, Response } from 'express';
 import { TodoItem } from '../../api/models/todoItem';
 import { createTodoItem, deleteTodoItem, getTodoItems } from '../client/todoClient';
 
-type TodoPageViewModel = {
-  title: string;
-  todos: TodoItem[];
-};
-
-type TodoPostBody = {
-  name?: string;
-};
-
-type TodoDeleteParams = {
-  id?: string;
-};
-
 const getBaseUrl = (req: Request): string => `${req.protocol}://${req.get('host')}`;
 
-const redirectToTodoPage = (res: Response) => {
+const refreshTodoPage = (res: Response) => {
   res.redirect('/todo');
 };
 
-const parseId = (rawId?: string): number | null => {
-  if (!rawId) {
-    return null;
-  }
-
-  const id = Number(rawId);
-  return Number.isFinite(id) ? id : null;
+type TodoPageViewModel = {
+  todos: TodoItem[];
 };
-
-const sortByNewestFirst = (items: TodoItem[]): TodoItem[] =>
-  [...items].sort((left, right) => right.id - left.id);
-
 export const renderTodoPage = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const items = await getTodoItems(getBaseUrl(req));
     const model: TodoPageViewModel = {
-      title: 'Todo',
-      todos: sortByNewestFirst(items),
+      todos: items.toReversed()
     };
 
     res.render('pages/todo', model);
@@ -47,6 +24,9 @@ export const renderTodoPage = async (req: Request, res: Response, next: NextFunc
   }
 };
 
+type TodoPostBody = {
+  name?: string;
+};
 export const createTodoFromFormAndRedirect = async (
   req: Request<{}, {}, TodoPostBody>,
   res: Response,
@@ -59,25 +39,28 @@ export const createTodoFromFormAndRedirect = async (
       await createTodoItem(getBaseUrl(req), { name });
     }
 
-    redirectToTodoPage(res);
+    refreshTodoPage(res);
   } catch (error) {
     next(error);
   }
 };
 
+type TodoDeleteParams = {
+  id: string;
+};
 export const deleteTodoFromFormAndRedirect = async (
   req: Request<TodoDeleteParams>,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    const todoId = parseId(req.params.id);
+    const todoId = req.params.id;
 
-    if (todoId !== null) {
+    if (!!todoId) {
       await deleteTodoItem(getBaseUrl(req), todoId);
     }
 
-    redirectToTodoPage(res);
+    refreshTodoPage(res);
   } catch (error) {
     next(error);
   }
