@@ -1,0 +1,58 @@
+mixin todoList()
+  section.todo-panel.todo-panel--stacked(aria-label='Todo items')
+    ul.todo-list(data-todo-list='')
+
+  script.
+    (() => {
+      const apiBase = '/api/items';
+      const list = document.querySelector('[data-todo-list]');
+
+      const renderTodos = async () => {
+        const response = await fetch(apiBase);
+
+        if (!response.ok) {
+          return;
+        }
+
+        const items = await response.json();
+
+        if (!list) {
+          return;
+        }
+
+        list.replaceChildren();
+
+        items.reverse().forEach((item) => {
+          const li = document.createElement('li');
+          li.className = 'todo-item';
+          li.innerHTML = `
+            <div class="todo-item__body">
+              <label class="todo-item__label">
+                <span class="todo-item__label-text">${item.name}</span>
+              </label>
+            </div>
+            <div class="todo-item__actions">
+              <button class="button button--ghost" data-delete-id="${item.id}">Delete</button>
+            </div>
+          `;
+          list.append(li);
+
+          const deleteBtn = li.querySelector('[data-delete-id]');
+          deleteBtn.addEventListener('click', () => deleteTodo(item.id));
+        });
+      };
+
+      const deleteTodo = async (itemId) => {
+        const response = await fetch(`${apiBase}/${itemId}`, {
+          method: 'DELETE',
+        });
+
+        if (!response.ok) {
+          return;
+        }
+
+        renderTodos();
+      };
+
+      renderTodos();
+    })();

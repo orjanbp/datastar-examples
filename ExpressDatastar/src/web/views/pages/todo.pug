@@ -1,0 +1,25 @@
+doctype html
+html(lang='en')
+  head
+    include ../components/meta.pug
+    title= title
+  body
+    main
+      include ../components/todoList.pug
+
+      .todo-page
+        .todo-page__header
+          .todo-page__heading
+            p.todo-page__eyebrow Work queue
+            h1 Todo
+            p.todo-page__description Add a todo and let the page reload after the API accepts it.
+          a.button.button--ghost(href='/') Back home
+
+        section.todo-panel(aria-label='Todo controls')
+          form.todo-toolbar(action='/todo', method='post')
+            label.todo-toolbar__label(for='todo-name') Add a todo item
+            .todo-toolbar__controls
+              input#todo-name.todo-toolbar__input(type='text', name='name', placeholder='Plan the next task', autocomplete='off', required='required')
+              button.button(type='submit') Add todo
+
+        +todoList()
