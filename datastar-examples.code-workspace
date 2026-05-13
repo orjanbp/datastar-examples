@@ -4,10 +4,10 @@
 			"path": "."
 		},
 		{
-			"path": "AstroDatastar"
+			"path": "DotnetDatastar"
 		},
 		{
-			"path": "DotnetDatastar"
+			"path": "ExpressDatastar"
 		}
 	],
 	"settings": {}

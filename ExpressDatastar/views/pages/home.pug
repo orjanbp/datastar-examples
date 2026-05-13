@@ -1,0 +1,57 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    title= title
+    style.
+      :root {
+        color-scheme: light;
+        font-family: Georgia, 'Times New Roman', serif;
+        background: #f4efe6;
+        color: #1b1a17;
+      }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        background:
+          radial-gradient(circle at top, rgba(194, 154, 108, 0.24), transparent 30%),
+          linear-gradient(135deg, #f8f2e8 0%, #efe1c7 100%);
+      }
+      main {
+        width: min(720px, calc(100vw - 2rem));
+        padding: 2.5rem;
+        border-radius: 24px;
+        background: rgba(255, 252, 246, 0.88);
+        box-shadow: 0 20px 60px rgba(63, 45, 24, 0.12);
+      }
+      h1 {
+        margin-top: 0;
+        font-size: clamp(2.2rem, 6vw, 4rem);
+      }
+      p,
+      li,
+      a {
+        font-size: 1.05rem;
+        line-height: 1.6;
+      }
+      a {
+        color: #7a3e12;
+      }
+      code {
+        padding: 0.1rem 0.35rem;
+        border-radius: 6px;
+        background: #f0e4d3;
+      }
+    
+  body
+    main
+      h1= title
+      p This application now separates browser-facing pages from JSON API endpoints.
+      p The landing page is served from #[code /], while resource endpoints live under #[code /api].
+      ul
+        li Browse this page at #[a(href='/') /]
+        li Fetch all items at #[a(href=apiBasePath) #{apiBasePath}]
+        li Organize future HTML routes under #[code src/routes/pages] and API routes under #[code src/routes/api]
