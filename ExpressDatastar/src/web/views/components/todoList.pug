@@ -1,58 +1,15 @@
-mixin todoList()
+mixin todoList(items)
   section.todo-panel.todo-panel--stacked(aria-label='Todo items')
-    ul.todo-list(data-todo-list='')
-
-  script.
-    (() => {
-      const apiBase = '/api/items';
-      const list = document.querySelector('[data-todo-list]');
-
-      const renderTodos = async () => {
-        const response = await fetch(apiBase);
-
-        if (!response.ok) {
-          return;
-        }
-
-        const items = await response.json();
-
-        if (!list) {
-          return;
-        }
-
-        list.replaceChildren();
-
-        items.reverse().forEach((item) => {
-          const li = document.createElement('li');
-          li.className = 'todo-item';
-          li.innerHTML = `
-            <div class="todo-item__body">
-              <label class="todo-item__label">
-                <span class="todo-item__label-text">${item.name}</span>
-              </label>
-            </div>
-            <div class="todo-item__actions">
-              <button class="button button--ghost" data-delete-id="${item.id}">Delete</button>
-            </div>
-          `;
-          list.append(li);
-
-          const deleteBtn = li.querySelector('[data-delete-id]');
-          deleteBtn.addEventListener('click', () => deleteTodo(item.id));
-        });
-      };
-
-      const deleteTodo = async (itemId) => {
-        const response = await fetch(`${apiBase}/${itemId}`, {
-          method: 'DELETE',
-        });
-
-        if (!response.ok) {
-          return;
-        }
-
-        renderTodos();
-      };
-
-      renderTodos();
-    })();
+    ul.todo-list
+      if !items.length
+        li.todo-item
+          .todo-item__body
+            span.todo-item__label-text No todo items yet.
+      each item in items
+        li.todo-item
+          .todo-item__body
+            label.todo-item__label
+              span.todo-item__label-text= item.name
+          .todo-item__actions
+            form(method='post', action=`/todo/delete/${item.id}`)
+              button.button.button--ghost(type='submit') Delete

@@ -1,33 +1,21 @@
 import { Router } from 'express';
-import { items, type Item } from '../../api/models/item';
+import {
+	createTodoFromFormAndRedirect,
+	deleteTodoFromFormAndRedirect,
+	renderTodoPage,
+} from '../controllers/todoPageController';
 
 const router = Router();
 
 router.get('/', (_req, res) => {
 	res.render('pages/home', {
 		title: 'Express Datastar',
-		apiBasePath: '/api/items',
+		apiBasePath: '/api/todo',
 	});
 });
 
-router.get('/todo', (_req, res) => {
-	res.render('pages/todo', {
-		title: 'Todo',
-	});
-});
-
-router.post('/todo', (req, res) => {
-	const name = typeof req.body?.name === 'string' ? req.body.name.trim() : '';
-
-	if (!name) {
-		res.status(400).send('Item name is required');
-		return;
-	}
-
-	const newItem: Item = { id: Date.now(), name };
-
-	items.push(newItem);
-	res.redirect(303, '/todo');
-});
+router.get('/todo', renderTodoPage);
+router.post('/todo/create', createTodoFromFormAndRedirect);
+router.post('/todo/delete/:id', deleteTodoFromFormAndRedirect);
 
 export default router;
