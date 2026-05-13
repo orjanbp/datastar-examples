@@ -1,0 +1,14 @@
+doctype html
+html(lang='en')
+  head
+    include ../components/meta.pug
+    title= title
+  body
+    main
+      h1 Hello World
+      p This application now separates browser-facing pages from JSON API endpoints.
+      p The landing page is served from #[code /], while resource endpoints live under #[code /api].
+      ul
+        li Browse this page at #[a(href='/') /]
+        li Fetch all items at #[a(href=apiBasePath) #{apiBasePath}]
+        li Organize future HTML routes under #[code src/routes/pages] and API routes under #[code src/routes/api]
