@@ -16,7 +16,7 @@ html(lang='en')
           a.button.button--ghost(href='/') Back home
 
         section.todo-panel(aria-label='Todo controls')
-          form.todo-toolbar(method='post', action='/todo/create')
+          form.todo-toolbar(method='post', action='/todo-form/create')
             label.todo-toolbar__label(for='todo-name') Add a todo item
             .todo-toolbar__controls
               input#todo-name.todo-toolbar__input(type='text', name='name', placeholder='Plan the next task', autocomplete='off', required='required')

@@ -1,11 +1,11 @@
 import { NextFunction, Request, Response } from 'express';
-import { TodoItem } from '../../api/models/todoItem';
-import { createTodoItem, deleteTodoItem, getTodoItems } from '../client/todoClient';
+import { TodoItem } from '../../../api/models/todoItem';
+import { createTodoItem, deleteTodoItem, getTodoItems } from './todoFormClient';
 
 const getBaseUrl = (req: Request): string => `${req.protocol}://${req.get('host')}`;
 
 const refreshTodoPage = (res: Response) => {
-  res.redirect('/todo');
+  res.redirect('/todo-form');
 };
 
 type TodoPageViewModel = {
@@ -18,7 +18,7 @@ export const renderTodoPage = async (req: Request, res: Response, next: NextFunc
       todos: items.toReversed()
     };
 
-    res.render('pages/todo', model);
+    res.render('pages/todoForm', model);
   } catch (error) {
     next(error);
   }

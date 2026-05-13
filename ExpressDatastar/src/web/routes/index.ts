@@ -1,9 +1,5 @@
 import { Router } from 'express';
-import {
-	createTodoFromFormAndRedirect,
-	deleteTodoFromFormAndRedirect,
-	renderTodoPage,
-} from '../controllers/todoPageController';
+import todoFormRoutes from '../features/todoFormSubmit/todoFormRoutes';
 
 const router = Router();
 
@@ -14,8 +10,6 @@ router.get('/', (_req, res) => {
 	});
 });
 
-router.get('/todo', renderTodoPage);
-router.post('/todo/create', createTodoFromFormAndRedirect);
-router.post('/todo/delete/:id', deleteTodoFromFormAndRedirect);
+router.use('/todo-form', todoFormRoutes);
 
 export default router;

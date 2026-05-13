@@ -1,4 +1,4 @@
-import { TodoItem } from '../../api/models/todoItem';
+import { TodoItem } from '../../../api/models/todoItem';
 
 type CreateTodoInput = {
   name: string;
@@ -6,25 +6,6 @@ type CreateTodoInput = {
 
 const getTodoApiUrl = (baseUrl: string) => `${baseUrl}/api/todo`;
 
-const parseTodoItems = async (response: Response): Promise<TodoItem[]> => {
-  try {
-    const payload = (await response.json()) as unknown;
-
-    if (!Array.isArray(payload)) {
-      return [];
-    }
-
-    return payload.filter(
-      (entry): entry is TodoItem =>
-        typeof entry === 'object' &&
-        entry !== null &&
-        typeof (entry as TodoItem).id === 'number' &&
-        typeof (entry as TodoItem).name === 'string'
-    );
-  } catch {
-    return [];
-  }
-};
 
 export const getTodoItems = async (baseUrl: string): Promise<TodoItem[]> => {
   const response = await fetch(getTodoApiUrl(baseUrl));
@@ -33,7 +14,7 @@ export const getTodoItems = async (baseUrl: string): Promise<TodoItem[]> => {
     return [];
   }
 
-  return parseTodoItems(response);
+  return response.json();
 };
 
 export const createTodoItem = async (
