@@ -19,7 +19,7 @@
   align-items: center;
   gap: 0.5rem;
   padding: 0.25rem;
-  border: var(--border) solid var(--color-primary);
+  border: var(--border-width) solid var(--color-neutral);
   border-radius: var(--radius-field);
   background: var(--color-base-100);
 }
@@ -38,7 +38,7 @@
 .todo-item__input {
   width: 100%;
   min-width: 0;
-  border: var(--border) solid var(--color-primary);
+  border: var(--border-width) solid var(--color-primary);
   border-radius: var(--radius-field);
   padding: 0.85rem 1rem;
   font: inherit;
@@ -102,9 +102,9 @@
   align-items: center;
   gap: 1rem;
   padding: 1rem;
-  border-radius: var(--radius-box);
+  border-radius: var(--radius-field);
   background: var(--color-base-100);
-  border: var(--border) solid var(--color-primary);
+  border: var(--border-width) solid var(--color-neutral);
 }
 
 .todo-item__body {
