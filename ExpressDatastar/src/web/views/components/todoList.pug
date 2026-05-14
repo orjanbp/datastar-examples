@@ -12,4 +12,4 @@ mixin todoList(items)
               span.todo-item__label-text= item.name
           .todo-item__actions
             form(method='post', action=`/todo-form/delete/${item.id}`)
-              button.button.button--ghost(type='submit') Delete
+              button.button.button--outline(type='submit') Delete

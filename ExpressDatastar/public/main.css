@@ -34,6 +34,9 @@
 }
 
 body {
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: normal;
   margin: 0;
   background:
     radial-gradient(circle at top, var(--color-base-100), transparent 30%),
@@ -47,6 +50,10 @@ main {
   box-sizing: border-box;
 }
 
+h1, h2, h3, h4 {
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+}
 h1 {
   margin-top: 0;
   font-size: clamp(2rem, 6vw, 3rem);
@@ -55,7 +62,7 @@ h1 {
 p,
 li,
 a {
-  font-size: 1.05rem;
+  font-size: 1rem;
   line-height: 1.6;
 }
 
@@ -69,28 +76,45 @@ a {
   justify-content: center;
   padding: 0.8rem 1.2rem;
   border-radius: var(--radius-field);
-  background: var(--color-primary);
-  color: var(--color-primary-content);
   text-decoration: none;
   font-weight: 700;
   letter-spacing: 0.02em;
-  box-shadow: 0 4px 12px rgba(122, 62, 18, 0.22);
+  line-height: initial;
   border: 0;
   cursor: pointer;
 }
+.button:focus-visible {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 3px;
+}
 
-.button:hover {
+.button--primary {
+  background: var(--color-primary);
+  color: var(--color-primary-content);
+  box-shadow: 0 4px 12px rgba(122, 62, 18, 0.22);
+}
+.button--primary:hover {
   background: var(--color-primary-hover);
 }
 
-.button:active {
+.button--primary:active {
   background: var(--color-primary-active);
+}
+
+.button--outline {
+  background: transparent;
+  color: var(--color-primary);
+  box-shadow: inset 0 0 0 2px var(--color-primary);
+}
+
+.button--outline:hover {
+  background: rgba(122, 62, 18, 0.08);
 }
 
 .button--ghost {
   background: transparent;
   color: var(--color-primary);
-  box-shadow: inset 0 0 0 2px var(--color-primary);
+  /* box-shadow: inset 0 0 0 2px var(--color-primary); */
 }
 
 .button--ghost:hover {

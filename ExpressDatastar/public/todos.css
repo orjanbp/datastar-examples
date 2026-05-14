@@ -67,13 +67,10 @@
   border-radius: calc(var(--radius-field) - 0.2rem);
   background: transparent;
   color: var(--color-primary-content);
-  font: inherit;
-  font-weight: 700;
-  letter-spacing: 0.01em;
 }
 
 .add-todo-bar__button:hover {
-  background: rgba(122, 62, 18, 0.08);
+  background: rgba(136, 136, 136, 0.08);
 }
 
 .add-todo-bar__button:active {
