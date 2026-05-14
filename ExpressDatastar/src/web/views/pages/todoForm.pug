@@ -41,18 +41,13 @@ html(lang='en')
         }
 
       .todo-page
+        a.button.button--ghost(href='/') Back home
         h1 Form Submit Todo List
-        div.card-container
-          .todo-page__header
-            .todo-page__heading
-              p.todo-page__description Add and delete todos using regular form posts.
-            a.button.button--ghost(href='/') Back home
-
-          section.todo-panel(aria-label='Todo controls')
-            form.todo-toolbar(method='post' action='/todo-form/create')
-              label.todo-toolbar__label(for='todo-name') Add a todo item
-              .todo-toolbar__controls
-                input#todo-name.todo-toolbar__input(type='text' name='name' placeholder='Plan the next task' autocomplete='off' required='required')
-                button.button(type='submit') Add todo
+        section.card-container.todo-panel(aria-label='Todo controls')
+          form.add-todo-bar(method='post' action='/todo-form/create')
+            label.add-todo-bar__label(for='todo-name') Add a todo item
+            .add-todo-bar__controls
+              input#todo-name.add-todo-bar__input(type='text' name='name' placeholder='Plan the next task' autocomplete='off' required='required')
+              button.button.add-todo-bar__button(type='submit') Add todo
 
         +todoList(todos)

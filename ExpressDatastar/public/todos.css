@@ -4,22 +4,37 @@
   gap: 1rem;
 }
 
-.todo-toolbar {
+.add-todo-bar {
   display: grid;
   gap: 0.75rem;
 }
 
-.todo-toolbar__label {
+.add-todo-bar__label {
   font-weight: 700;
 }
 
-.todo-toolbar__controls {
+.add-todo-bar__controls {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
-  gap: 0.75rem;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem;
+  border: var(--border) solid var(--color-primary);
+  border-radius: var(--radius-field);
+  background: var(--color-base-100);
 }
 
-.todo-toolbar__input,
+.add-todo-bar__input {
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  border-radius: calc(var(--radius-field) - 0.2rem);
+  padding: 0.6rem 0.75rem;
+  font: inherit;
+  background: transparent;
+  color: inherit;
+}
+
 .todo-item__input {
   width: 100%;
   min-width: 0;
@@ -31,10 +46,43 @@
   color: inherit;
 }
 
-.todo-toolbar__input:focus-visible,
+.add-todo-bar__input:focus-visible,
 .todo-item__input:focus-visible {
   outline: 3px solid var(--color-primary);
   outline-offset: 2px;
+}
+
+.add-todo-bar__controls:focus-within {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.add-todo-bar__input:focus-visible {
+  outline: none;
+}
+
+.add-todo-bar__button {
+  align-self: stretch;
+  padding: 0.6rem 0.95rem;
+  border-radius: calc(var(--radius-field) - 0.2rem);
+  background: transparent;
+  color: var(--color-primary-content);
+  font: inherit;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.add-todo-bar__button:hover {
+  background: rgba(122, 62, 18, 0.08);
+}
+
+.add-todo-bar__button:active {
+  background: rgba(122, 62, 18, 0.14);
+}
+
+.add-todo-bar__button:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 1px;
 }
 
 .todo-status,
@@ -53,6 +101,8 @@
 
 .todo-item {
   display: grid;
+  grid-template-columns: 1fr min-content;
+  align-items: center;
   gap: 1rem;
   padding: 1rem;
   border-radius: var(--radius-box);
