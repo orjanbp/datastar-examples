@@ -1,53 +1,18 @@
-doctype html
-html(lang='en')
-  head
-    include ../partials/meta.pug
-    title="Todo"
-  body
-    main
-      include ../components/todoList.pug
+extends ../layouts/layout.pug
 
-      style(type='text/css').
-        .todo-page {
-          display: grid;
-          gap: 1.5rem;
-        }
+include ../components/todoList.pug
 
-        .todo-page__header {
-          display: flex;
-          align-items: flex-start;
-          justify-content: space-between;
-          gap: 1rem;
-        }
+block append head
+  title="Form Submit Todo List - Express Datastar"
 
-        .todo-page__heading {
-          display: grid;
-          gap: 0.35rem;
-        }
-
-        .todo-page__description {
-          max-width: 42rem;
-          margin: 0;
-        }
-
-        @media (max-width: 720px) {
-          .todo-page__header {
-            flex-direction: column;
-          }
-
-          .todo-toolbar__controls {
-            grid-template-columns: 1fr;
-          }
-        }
-
-      .todo-page
-        a.button.button--ghost(href='/') Back home
-        h1 Form Submit Todo List
-        section.card-container.todo-panel(aria-label='Todo controls')
-          form.add-todo-bar(method='post' action='/todo-form/create')
-            label.add-todo-bar__label(for='todo-name') Add a todo item
-            .add-todo-bar__controls
-              input#todo-name.add-todo-bar__input(type='text' name='name' placeholder='Plan the next task' autocomplete='off' required='required')
-              button.button.add-todo-bar__button(type='submit') Add todo
-
-        +todoList(todos)
+block content
+  .page-content-header
+    a.button.button--ghost(href='/') Back home
+    h1 Form Submit Todo List
+  section.card-container.todo-panel(aria-label='Todo controls')
+    form.add-todo-bar(method='post' action='/todo-form/create')
+      label.add-todo-bar__label(for='todo-name') Add a todo item
+      .add-todo-bar__controls
+        input#todo-name.add-todo-bar__input(type='text' name='name' placeholder='Plan the next task' autocomplete='off' required='required')
+        button.button.add-todo-bar__button(type='submit') Add todo
+  +todoList(todos)

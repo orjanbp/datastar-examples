@@ -1,16 +1,16 @@
-doctype html
-html(lang='en')
-  head
-    include ../partials/meta.pug
-    title="Express Datastar"
-  body
-    main
-      h1 Hello World
-      div.card-container
-        p
-          | This mini-app is an example of using Express with and without Datastar.
-        p
-          | The goal is to demonstrate rich UI interactions following Hypermedia Driven Application (HDA) principles,
-          | in which we handle UI state entirely by patching HTML fragments from the server.
-        div
-          a(role="button", class="button", href='/todo-form') Todos (Form Submit)
+extends ../layouts/layout.pug
+
+block append head
+  title="Home - Express Datastar"
+
+block content
+  .page-content-header
+    h1 Hello World
+  div.card-container
+    p
+      | This mini-app is an example of using Express with and without Datastar.
+    p
+      | The goal is to demonstrate rich UI interactions following Hypermedia Driven Application (HDA) principles,
+      | in which we handle UI state entirely by patching HTML fragments from the server.
+    div
+      a(role="button" class="button" href='/todo-form') Todos (Form Submit)
