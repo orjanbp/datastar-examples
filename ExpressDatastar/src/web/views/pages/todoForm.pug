@@ -7,19 +7,52 @@ html(lang='en')
     main
       include ../components/todoList.pug
 
-      .todo-page
-        .todo-page__header
-          .todo-page__heading
-            p.todo-page__eyebrow Work queue
-            h1 Todo
-            p.todo-page__description Add and delete todos using regular form posts.
-          a.button.button--ghost(href='/') Back home
+      style(type='text/css').
+        .todo-page {
+          display: grid;
+          gap: 1.5rem;
+        }
 
-        section.todo-panel(aria-label='Todo controls')
-          form.todo-toolbar(method='post', action='/todo-form/create')
-            label.todo-toolbar__label(for='todo-name') Add a todo item
-            .todo-toolbar__controls
-              input#todo-name.todo-toolbar__input(type='text', name='name', placeholder='Plan the next task', autocomplete='off', required='required')
-              button.button(type='submit') Add todo
+        .todo-page__header {
+          display: flex;
+          align-items: flex-start;
+          justify-content: space-between;
+          gap: 1rem;
+        }
+
+        .todo-page__heading {
+          display: grid;
+          gap: 0.35rem;
+        }
+
+        .todo-page__description {
+          max-width: 42rem;
+          margin: 0;
+        }
+
+        @media (max-width: 720px) {
+          .todo-page__header {
+            flex-direction: column;
+          }
+
+          .todo-toolbar__controls {
+            grid-template-columns: 1fr;
+          }
+        }
+
+      .todo-page
+        h1 Form Submit Todo List
+        div.card-container
+          .todo-page__header
+            .todo-page__heading
+              p.todo-page__description Add and delete todos using regular form posts.
+            a.button.button--ghost(href='/') Back home
+
+          section.todo-panel(aria-label='Todo controls')
+            form.todo-toolbar(method='post' action='/todo-form/create')
+              label.todo-toolbar__label(for='todo-name') Add a todo item
+              .todo-toolbar__controls
+                input#todo-name.todo-toolbar__input(type='text' name='name' placeholder='Plan the next task' autocomplete='off' required='required')
+                button.button(type='submit') Add todo
 
         +todoList(todos)

@@ -2,15 +2,15 @@ doctype html
 html(lang='en')
   head
     include ../partials/meta.pug
-    title= title
+    title="Express Datastar"
   body
     main
       h1 Hello World
-      p This application now separates browser-facing pages from JSON API endpoints.
-      p The landing page is served from #[code /], while resource endpoints live under #[code /api].
-      p
-        a.button(href='/todo-form') Todos
-      ul
-        li Browse this page at #[a(href='/') /]
-        li Fetch all items at #[a(href=apiBasePath) #{apiBasePath}]
-        li Organize future HTML routes under #[code src/web/routes] and API routes under #[code src/api/routes]
+      div.card-container
+        p
+          | This mini-app is an example of using Express with and without Datastar.
+        p
+          | The goal is to demonstrate rich UI interactions following Hypermedia Driven Application (HDA) principles,
+          | in which we handle UI state entirely by patching HTML fragments from the server.
+        div
+          a(role="button", class="button", href='/todo-form') Todos (Form Submit)
