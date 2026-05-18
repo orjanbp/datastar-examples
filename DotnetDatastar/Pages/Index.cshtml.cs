@@ -1,22 +1,20 @@
 using System.ComponentModel.DataAnnotations;
-using DotnetDatastar.Features.Todos.Domain;
-using DotnetDatastar.Infrastructure.Data;
+using DotnetDatastar.Features.Todos.Web;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 
 namespace DotnetDatastar.Pages;
 
 public class IndexModel : PageModel
 {
-    private readonly TodoDb _db;
+    private readonly ITodoClient _todoClient;
 
-    public IndexModel(TodoDb db)
+    public IndexModel(ITodoClient todoClient)
     {
-        _db = db;
+        _todoClient = todoClient ?? throw new ArgumentNullException(nameof(todoClient));
     }
 
-    public IReadOnlyList<Todo> Todos { get; private set; } = [];
+    public IReadOnlyList<TodoItem> Todos { get; private set; } = [];
 
     [BindProperty]
     [Required]
@@ -44,33 +42,22 @@ public class IndexModel : PageModel
             return Page();
         }
 
-        _db.Todos.Add(new Todo
-        {
-            Title = title
-        });
-
-        await _db.SaveChangesAsync();
+        await _todoClient.CreateTodoAsync(title);
         return RedirectToPage();
     }
 
-    public async Task<IActionResult> OnPostDeleteAsync(int id)
+    public async Task<IActionResult> OnPostDeleteAsync(long id)
     {
-        var todo = await _db.Todos.FindAsync(id);
-        if (todo is not null)
-        {
-            _db.Todos.Remove(todo);
-            await _db.SaveChangesAsync();
-        }
-
+        await _todoClient.DeleteTodoAsync(id);
         return RedirectToPage();
     }
 
     private async Task LoadTodosAsync()
     {
-        Todos = await _db.Todos
-            .AsNoTracking()
+        var todos = await _todoClient.GetTodosAsync();
+        Todos = todos
             .OrderBy(todo => todo.Id)
-            .ToListAsync();
+            .ToList();
     }
 }
 

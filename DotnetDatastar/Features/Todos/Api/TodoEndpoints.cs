@@ -12,11 +12,11 @@ public static class TodoEndpoints
 
         todoItems.MapGet("/", GetAllTodosAsync);
         todoItems.MapGet("/complete", GetCompleteTodosAsync);
-        todoItems.MapGet("/{id:int}", GetTodoAsync);
+        todoItems.MapGet("/{id:long}", GetTodoAsync);
 
         todoItems.MapPost("/", CreateTodoAsync);
-        todoItems.MapPut("/{id:int}", UpdateTodoAsync);
-        todoItems.MapDelete("/{id:int}", DeleteTodoAsync);
+        todoItems.MapPut("/{id:long}", UpdateTodoAsync);
+        todoItems.MapDelete("/{id:long}", DeleteTodoAsync);
 
         return todoItems;
     }
@@ -27,7 +27,7 @@ public static class TodoEndpoints
     private async static Task<IResult> GetCompleteTodosAsync(TodoDb db) =>
         TypedResults.Ok(await db.Todos.Where(t => t.IsDone).ToListAsync());
 
-    private async static Task<IResult> GetTodoAsync(int id, TodoDb db) =>
+    private async static Task<IResult> GetTodoAsync(long id, TodoDb db) =>
         await db.Todos.FindAsync(id)
             is {} todo
             ? TypedResults.Ok(todo)
@@ -41,7 +41,7 @@ public static class TodoEndpoints
         return TypedResults.Created($"/todoitems/{todo.Id}", todo);
     }
 
-    private async static Task<IResult> UpdateTodoAsync(int id, Todo inputTodo, TodoDb db)
+    private async static Task<IResult> UpdateTodoAsync(long id, Todo inputTodo, TodoDb db)
     {
         var todo = await db.Todos.FindAsync(id);
 
@@ -55,7 +55,7 @@ public static class TodoEndpoints
         return TypedResults.NoContent();
     }
 
-    private async static Task<IResult> DeleteTodoAsync(int id, TodoDb db)
+    private async static Task<IResult> DeleteTodoAsync(long id, TodoDb db)
     {
         if (await db.Todos.FindAsync(id) is not {} todo)
         {

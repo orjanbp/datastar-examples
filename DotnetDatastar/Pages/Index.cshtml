@@ -1,4 +1,4 @@
-@page
+@page "/index"
 @model IndexModel
 @{
     Layout = null;
@@ -118,12 +118,10 @@
             {
                 <li>
                     <div class="meta">
-                        <span class="todo-title @(todo.IsDone ? "done" : string.Empty)">@todo.Title</span>
-                        <span class="status">@(todo.IsDone ? "Done" : "Open")</span>
+                        <span class="todo-title">@todo.Name</span>
                     </div>
 
-                    <form method="post" asp-page-handler="Delete" class="delete-form">
-                        <input type="hidden" name="id" value="@todo.Id" />
+                    <form method="post" asp-page-handler="Delete" asp-route-id="@todo.Id" class="delete-form">
                         <button type="submit">Delete</button>
                     </form>
                 </li>

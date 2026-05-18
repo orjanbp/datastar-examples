@@ -1,0 +1,109 @@
+@using DotnetDatastar.Features.Todos.Web
+@model List<TodoItem>
+
+@{
+    var todos = Model ?? new List<TodoItem>();
+}
+
+<section class="todo-panel todo-panel--stacked" aria-label="Todo items">
+    <ul class="todo-list">
+        @if (todos.Count == 0)
+        {
+            <li class="todo-item">
+                <div class="todo-item__body">
+                    <span class="todo-item__label-text">No todo items yet.</span>
+                </div>
+            </li>
+        }
+        else
+        {
+            @foreach (var todo in todos)
+            {
+                <li class="todo-item">
+                    <div class="todo-item__body">
+                        <label class="todo-item__label">
+                            <span class="todo-item__label-text">@todo.Name</span>
+                        </label>
+                    </div>
+                    <div class="todo-item__actions">
+                        <form method="post" action="@Url.Page("/Todo/Delete", new { id = todo.Id })" class="todo-form">
+                            <button class="button button--ghost" type="submit">Delete</button>
+                        </form>
+                    </div>
+                </li>
+            }
+        }
+    </ul>
+</section>
+
+<style>
+    .todo-panel {
+        border: 1px solid rgba(127, 127, 127, 0.2);
+        border-radius: 0.5rem;
+        padding: 1rem;
+    }
+
+    .todo-panel--stacked {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .todo-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .todo-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: 0.75rem;
+        border: 1px solid rgba(127, 127, 127, 0.35);
+        border-radius: 0.5rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .todo-item__body {
+        flex: 1;
+    }
+
+    .todo-item__label {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        cursor: pointer;
+    }
+
+    .todo-item__label-text {
+        margin: 0;
+    }
+
+    .todo-item__actions {
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    .todo-form {
+        margin: 0;
+    }
+
+    .button {
+        padding: 0.5rem 0.75rem;
+        border: 1px solid rgba(127, 127, 127, 0.35);
+        border-radius: 0.25rem;
+        background-color: transparent;
+        cursor: pointer;
+        font-size: 0.875rem;
+        transition: background-color 0.2s;
+    }
+
+    .button:hover {
+        background-color: rgba(127, 127, 127, 0.1);
+    }
+
+    .button--ghost {
+        border-color: transparent;
+    }
+</style>
