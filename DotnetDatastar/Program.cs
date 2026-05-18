@@ -38,7 +38,6 @@ app.UseExceptionHandler(exceptionHandlerApp =>
 
 app.MapRazorPages();
 app.MapControllers();
-app.MapApiTodoEndpoints();   // New /api/todo endpoints (Express parity)
-app.MapTodoEndpoints();      // Legacy /todo-items endpoints (keep for now)
+app.MapApiTodoEndpoints();
 
 app.Run();

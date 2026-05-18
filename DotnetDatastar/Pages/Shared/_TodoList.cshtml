@@ -26,7 +26,7 @@
                         </label>
                     </div>
                     <div class="todo-item__actions">
-                        <form method="post" action="@Url.Page("/Todo/Delete", new { id = todo.Id })" class="todo-form">
+                        <form method="post" action="/todo/delete/@todo.Id" class="todo-form">
                             <button class="button button--ghost" type="submit">Delete</button>
                         </form>
                     </div>
